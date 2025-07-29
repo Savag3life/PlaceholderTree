@@ -2,24 +2,24 @@
 Placeholder Tree offers a more maintainable way to create and manage [PlaceholderAPI](https://github.com/PlaceholderAPI/PlaceholderAPI) placeholders—and potentially any placeholder system. It allows you to group placeholders into logical sets, while transforming the provided `Context` as needed for each placeholder.
 ## Examples
 ```java
-PlaceholderTree.builder("prisons", Function.identity())
-        .group("stats", context -> {
+PlaceholderTree.builder("prisons", Function.identity()) // %prisons_
+        .group("stats", context -> { // %prisons_stats_
             return new PrisonsContext(...);
         })
-        .node("blocks", prisonContext -> {
+        .node("blocks", prisonContext -> { // %prisons_stats_blocks%
             return prisonContext.getPrisonPlayer().getTotalBlocksMined();
         })
-        .parent()
-        .group("balance", context -> {
+        .parent() // %prisons_
+        .group("balance", context -> { // %prisons_balance_
             return new BalanceContext(...);
         })
-        .node("btc", balanceContext -> {
+        .node("btc", balanceContext -> { // %prisons_balance_btc%
             return balanceContext.getPrisonPlayer().getBalance(Currency.BITCOIN);
         })
-        .node("eth", balanceContext -> {
+        .node("eth", balanceContext -> { // %prisons_balance_eth%
             return balanceContext.getPrisonPlayer().getBalance(Currency.ETHEREUM);
         })
-        .node("usd", balanceContext -> {
+        .node("usd", balanceContext -> { // %prisons_balance_usd%
             return balanceContext.getPrisonPlayer().getBalance(Currency.DOLLAR);
         })
         .build();
